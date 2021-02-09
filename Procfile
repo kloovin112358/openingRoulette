@@ -1,1 +1,1 @@
-web: gunicorn opening-roulette.wsgi --log-file -
+web: gunicorn app:app
