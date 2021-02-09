@@ -9,7 +9,7 @@ from random import randrange
 rows = []
 total_list = []
 
-with open('openings.csv', 'r') as csvfile:
+with open('openings.csv', 'r', errors='ignore') as csvfile:
     csvreader = csv.reader(csvfile) 
     # extracting each data row one by one 
     for row in csvreader: 
