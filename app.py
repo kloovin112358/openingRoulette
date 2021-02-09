@@ -74,6 +74,3 @@ def getRandomMove(movesList):
             move = posOptions[randEntry][2][len(movesList)]
             dict = {'name':posOptions[randEntry][0], 'link':posOptions[randEntry][1], 'move':move}
             return dict
-
-if __name__ == "__main__": 
-    app.run()
