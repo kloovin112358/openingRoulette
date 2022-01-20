@@ -1,33 +1,41 @@
-# set FLASK_ENV=development
-# python -m flask run
-
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
 import csv
 from random import randrange 
 
-rows = []
-total_list = []
-
-with open('openings.csv', 'r', errors='ignore') as csvfile:
-    csvreader = csv.reader(csvfile) 
-    # extracting each data row one by one 
-    for row in csvreader: 
-        rows.append(row)
-
-for row in rows:
-    movesTemp = (row[2]).split()
-    newMovesTemp = []
-    for move in movesTemp:
-        if "." in move:
-            move = move.split('.')[1]
-
-        newMovesTemp.append(move)
-
-    total_list.append([row[0], row[1], newMovesTemp])
-
 app = Flask(__name__)
 socketio = SocketIO(app)
+
+rows = []
+total_list = []
+"""
+The CSV is in the following format:
+
+Opening name, link to opening, opening moves
+"""
+@app.before_first_request
+def loadCSVData():
+    with open('openings.csv', 'r', errors='ignore') as csvfile:
+        csvreader = csv.reader(csvfile) 
+        for row in csvreader: 
+            rows.append(row)
+
+    for row in rows:
+
+        # since the CSV has the opening moves
+        # stored as space separated like this:
+        # 1.e4 Nf6 2.e5 Nd5 3.d4 d6 4.Nf3 g6,
+        # we have to parse the moves into a proper format
+
+        movesTemp = (row[2]).split()
+        newMovesTemp = []
+        for move in movesTemp:
+            if "." in move:
+                move = move.split('.')[1]
+
+            newMovesTemp.append(move)
+
+        total_list.append([row[0], row[1], newMovesTemp])
 
 @app.route('/')
 def index():
