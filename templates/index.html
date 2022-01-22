@@ -19,16 +19,16 @@
 <body>
 <nav class="navbar navbar-light bg-light border-bottom">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="#">
+        <a class="navbar-brand fw-bold" href="/">
             Opening Roulette
         </a>
-        <a class='navbar-brand' href='https://github.com/kloovin112358'>
+        <a class='navbar-brand' href='https://github.com/kloovin112358/openingRoulette'>
             <i class="bi bi-github"></i>
         </a>
     </div>
 </nav>
 
-<div class='container' id='welcome'>
+<div class='container' id='welcome' {% if not instructions %}style='display:none'{% endif %}>
     <div class='py-5'>
         <p class='display-3 fw-bold'>Are your chess games getting boring?</p>
         <hr class='my-5'>
@@ -37,11 +37,11 @@
             That's why I built Opening Roulette, which randomly generates openings for you.
             <br><br>Get out of your comfort zone. Stop playing the Ruy Lopez.
         </p>
-        <button class='btn btn-lg btn-primary mt-5' id='endWelcome'>Start</button>
+        <button class='btn btn-lg btn-info mt-5 text-white' id='endWelcome'>Start</button>
     </div>
 </div>
 
-<div class='container' style='display:none' id='startDiv'>
+<div class='container' {% if instructions %}style='display:none'{% endif %} id='startDiv'>
     <div class='py-5'>
         <p class='display-3 fw-bold'>Which side are you playing?</p>
         <hr class='my-5'>
@@ -54,7 +54,7 @@
 
     <div class='bg-dark p-5 text-light'>
         <div class='container display-5'>
-            Current opening: <a id='currentOpening' href='#' target='_blank'></a>
+            Current opening: <a id='currentOpening' class='text-info text-decoration-none fw-bold text-hover' href='#' target='_blank'></a>
             <hr class='text-light my-3'>
             <i id='moveList' class='display-6'></i>
         </div>
@@ -64,11 +64,11 @@
         <div id='firstMoveAlertPlaceholder' class='mt-4'></div>
         <div class='pb-5 pt-2'>
             <div class='card bg-secondary shadow-lg d-none' id='yourMovesCard'>
-                <div class='card-body p-5 display-1'>
+                <div class='card-body p-5 display-1 text-info'>
                     <span id='yourMove' class='fw-bold text-white'></span> (your move)
                 </div>
             </div>
-            <div class='card shadow-lg bg-primary mt-3'>
+            <div class='card shadow-lg bg-info mt-3' id='theirMovesCard'>
                 <div class='card-body'>
                     <div class='d-flex'>
                         <button class='btn btn-light me-2' id='submitTheirMove'>Submit</button>
@@ -76,6 +76,9 @@
                     </div>
                 </div>
             </div>  
+            <div class='display-3 mt-3' id='playAgain' style='display:none;'>
+                <a class='btn btn-info btn-lg text-white' href='/?instructions=false'>Play again?</a>
+            </div>
         </div>
     </div>
 
@@ -93,7 +96,10 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body lead">
-            This is pretty simple. Just move your pieces as instructed, and input your opponent's moves using standard notation. I am not liable for any lost games.
+            This is pretty simple. Just move your pieces as instructed, and input your opponent's moves using standard notation. 
+            More information on notation <a href='http://cfajohnson.com/chess/SAN/' target='_blank'>here</a>.
+            <br><br>Note: For pawn-taking moves, include the starting square. Ex: f-pawn takes e5: fe5x
+            <br><br>I am not liable for any lost games.
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -159,6 +165,7 @@ $('.startBtn').on('click', function() {
     if ($(this).hasClass('white')) {
         socket.emit('opponent_move', {curGame})
         $('#yourMovesCard').removeClass('d-none')
+        {% if instructions %}
         $('#firstMoveAlertPlaceholder').append(
             `
             <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
@@ -167,11 +174,14 @@ $('.startBtn').on('click', function() {
             </div>
             `
         )
+        {% endif %}
     }
 
     $('#startDiv').fadeOut(delayTime).promise().done(function(){
         $('#boardDiv').fadeIn(delayTime).promise().done(function(){
+            {% if instructions %}
             instructionsModal.show()
+            {% endif %}
         });
     });
 
@@ -190,30 +200,11 @@ $('#submitTheirMove').on('click', function() {
     }
 })
 
-// function submitOpponentMove(move) {
-//     curGame.push(move)
-//     socket.emit('opponent_move', {curGame})
-// }
-
-// $('#submitBlackInitial').on('click', function() {
-//     var opMove = $('#blackInitialMove').val()
-//     curGame.push(opMove)
-//     $('#gameInformation').show()
-//     socket.emit('opponent_move', {curGame})
-// })
-
-// $('#submitOpponentMove').on('click', function() {
-//     var opMove = $('#opponentMove').val()
-//     curGame.push(opMove)
-//     $('#gameInformation').show()
-//     socket.emit('opponent_move', {curGame})
-// })
-
 socket.on('yourMove', function(data) {
     curGame.push(data['move'])
 
     $('#yourMove').text(data['move'])
-    $('#moveList').text(curGame)
+    $('#moveList').text(curGame.join(', '))
     $('#currentOpening').text(data['name'])
     $('#currentOpening').attr('href', data['link'])
 
@@ -221,6 +212,10 @@ socket.on('yourMove', function(data) {
 });
 
 socket.on('done', function() {
+    $('#yourMovesCard').fadeOut(delayTime)
+    $('#theirMovesCard').fadeOut(delayTime)
+    $('#firstMoveAlertPlaceholder').fadeOut(delayTime)
+    $('#playAgain').fadeIn(delayTime)
     doneModal.show()
 });
 

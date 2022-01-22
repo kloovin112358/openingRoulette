@@ -39,7 +39,13 @@ def loadCSVData():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # the instructions parameter controls whether
+    # the system displays modals and extra start info
+    if request.args.get('instructions') == 'false':
+        instructions = False
+    else:
+        instructions = True
+    return render_template('index.html', instructions=instructions)
 
 @socketio.on('opponent_move')
 def opponent_move(game):
