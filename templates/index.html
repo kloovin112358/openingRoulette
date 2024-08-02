@@ -54,7 +54,7 @@
 
     <div class='bg-dark p-5 text-light'>
         <div class='container display-5'>
-            Current opening: <a id='currentOpening' class='text-info text-decoration-none fw-bold text-hover' href='#' target='_blank'></a>
+            Current opening:<br> <a id='currentOpening' class='text-info text-decoration-none fw-bold text-hover' href='#' target='_blank'></a>
             <hr class='text-light my-3'>
             <i id='moveList' class='display-6'></i>
         </div>
@@ -63,15 +63,15 @@
     <div class='container'>
         <div id='firstMoveAlertPlaceholder' class='mt-4'></div>
         <div class='pb-5 pt-2'>
-            <div class='card bg-secondary shadow-lg d-none' id='yourMovesCard'>
-                <div class='card-body p-5 display-1 text-info'>
-                    <span id='yourMove' class='fw-bold text-white'></span> (your move)
+            <div class='card shadow-lg d-none border-primary' id='yourMovesCard'>
+                <div class='card-body p-5 display-1 text-primary'>
+                    <span id='yourMove' class='fw-bold'></span> (your move)
                 </div>
             </div>
-            <div class='card shadow-lg bg-info mt-3' id='theirMovesCard'>
+            <div class='card shadow-lg mt-3' id='theirMovesCard'>
                 <div class='card-body'>
                     <div class='d-flex'>
-                        <button class='btn btn-light me-2' id='submitTheirMove'>Submit</button>
+                        <button class='btn btn-primary me-2' id='submitTheirMove'>Submit</button>
                         <input class='form-control align-self-stretch' placeholder='Their move' id='theirMove'>
                     </div>
                 </div>
@@ -168,7 +168,7 @@ $('.startBtn').on('click', function() {
         {% if instructions %}
         $('#firstMoveAlertPlaceholder').append(
             `
-            <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+            <div class="alert alert-primary alert-dismissible fade show mt-3" role="alert">
                 Your first move to play is shown below.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
