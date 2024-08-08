@@ -2,10 +2,10 @@
 This is a random generator for chess openings in order to make your games less boring. Your moves are compared to an openings database, which gives you a real opening to play. 
 Built on [Flask](https://flask.palletsprojects.com/en/2.0.x/), [Bootstrap 5](https://getbootstrap.com/), and [Flask SocketIO](https://flask-socketio.readthedocs.io/en/latest/).
 
-![U5Ud0b7X1z](https://github.com/user-attachments/assets/10919267-ac6c-46e1-9ed0-e1538090e225)
-![ZxoCPUYdV4](https://github.com/user-attachments/assets/4f5eff02-e2dc-4e06-a8d7-e7cd6f6a819c)
-![hUC7fkaE6S](https://github.com/user-attachments/assets/3f8567b1-3c2c-458b-966f-966a982dc466)
-![b6pz5fpW2l](https://github.com/user-attachments/assets/cf87532e-f41f-4c06-84a7-e8d251a07e21)
-![B26AxjqFPL](https://github.com/user-attachments/assets/73893afa-415c-4952-ac00-2233de729c0f)
-![8ekB9zr6tw](https://github.com/user-attachments/assets/1676c4a5-fa0b-4070-a2f1-2b17d741c281)
-![JxNrPPtK4P](https://github.com/user-attachments/assets/50ccd99f-49b5-455d-897d-395c92ee883f)
+![1](https://github.com/user-attachments/assets/3d3d6dab-1f4d-401f-9b91-6dc07a071550)
+![2](https://github.com/user-attachments/assets/97b90dc0-1e73-46e8-b160-65b83cd8de7c)
+![3](https://github.com/user-attachments/assets/2ab058e4-fe4c-4816-a815-f448e4525a03)
+![4](https://github.com/user-attachments/assets/f6d182b3-655d-4c93-9291-932722bd17aa)
+![5](https://github.com/user-attachments/assets/ea18ff8c-f996-4941-8924-fab35dbf12aa)
+![6](https://github.com/user-attachments/assets/f22ed8af-51a3-4e33-afcd-6f394a098a3f)
+![7](https://github.com/user-attachments/assets/d90f83c7-5f83-48d7-ac03-1026a6814d77)
